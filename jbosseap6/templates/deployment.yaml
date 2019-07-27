@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+       app: {{ .Chart.Name }}
+       func: {{ .Values.func }}
+  template:
+    metadata: 
+      name: {{ .Chart.Name }}
+      labels:
+        app: {{ .Chart.Name }}
+        func: {{ .Values.func }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
