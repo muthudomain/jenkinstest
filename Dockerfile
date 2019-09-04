@@ -16,4 +16,4 @@ USER root
 RUN chown jboss:jboss $JBOSS_HOME/standalone/deployments/app.war
 
 # Important, use jboss user to run image
-USER jboss
+USER jboss2
